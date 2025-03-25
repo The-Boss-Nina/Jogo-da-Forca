@@ -1,4 +1,4 @@
-package src.forca;
+package forca;
 
 import javax.swing.JFrame;
 

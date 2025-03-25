@@ -1,4 +1,4 @@
-package src.forca;
+package forca;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -91,7 +91,7 @@ public class Interface extends JFrame implements ActionListener, ItemListener {
         this.proximo.setMnemonic('S');
 
         for (int i = 0; i <= 3; i++) {
-            this.niveis[i] = new JRadioButtonMenuItem("Level" + (i + 1));
+            this.niveis[i] = new JRadioButtonMenuItem("Nível" + (i + 1));
             this.niveis[i].addItemListener(this);
             this.niveis[i].setFocusable(false);
         }
@@ -108,8 +108,8 @@ public class Interface extends JFrame implements ActionListener, ItemListener {
         this.arquivo.add(this.sobre);
         this.arquivo.add(this.sair);
 
-        this.nivel = new JMenu("Levels");
-        this.nivel.setMnemonic('L');
+        this.nivel = new JMenu("Níveis");
+        this.nivel.setMnemonic('N');
         this.nivel.addActionListener(this);
         for (int i = 0; i <= 3; i++) {
             this.nivel.add(this.niveis[i]);

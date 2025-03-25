@@ -1,4 +1,4 @@
-package src.forca;
+package forca;
 
 import java.io.File;
 import java.io.FileNotFoundException;
