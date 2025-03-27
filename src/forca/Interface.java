@@ -2,13 +2,15 @@ package forca;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -23,7 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 
-public class Interface extends JFrame implements ActionListener, ItemListener {
+public class Interface extends JFrame implements ActionListener, ItemListener, KeyListener {
 
     private JMenuBar barraMenu;
     private JMenu arquivo, nivel, opcoes;
@@ -64,6 +66,10 @@ public class Interface extends JFrame implements ActionListener, ItemListener {
         this.painelCentral.setVisible(false);
         this.painelSegredo.setVisible(false);
         this.nivelAtual = 0;
+        
+        // Adicionando o KeyListener para capturar as teclas
+        this.addKeyListener(this);
+        this.setFocusable(true);  // Permite que o JFrame capture eventos de teclado
     }
 
     private void configuraJFrame() {
@@ -74,6 +80,7 @@ public class Interface extends JFrame implements ActionListener, ItemListener {
     }
 
     private void criaMenu() {
+        // Configurações do menu
         this.sobre = new JMenuItem("Sobre");
         this.sobre.addActionListener(this);
         this.sobre.setMnemonic('o');
@@ -151,86 +158,6 @@ public class Interface extends JFrame implements ActionListener, ItemListener {
             this.vetbotao[i].setRolloverEnabled(false);
             this.vetbotao[i].setSize(60, 52);
             this.vetbotao[i].addActionListener(this);
-            switch (i) {
-                case 0:
-                    this.vetbotao[0].setLocation(45, 10);
-                    break;
-                case 1:
-                    this.vetbotao[1].setLocation(115, 10);
-                    break;
-                case 2:
-                    this.vetbotao[2].setLocation(185, 10);
-                    break;
-                case 3:
-                    this.vetbotao[3].setLocation(255, 10);
-                    break;
-                case 4:
-                    this.vetbotao[4].setLocation(325, 10);
-                    break;
-                case 5:
-                    this.vetbotao[5].setLocation(395, 10);
-                    break;
-                case 6:
-                    this.vetbotao[6].setLocation(465, 10);
-                    break;
-                case 7:
-                    this.vetbotao[7].setLocation(535, 10);
-                    break;
-                case 8:
-                    this.vetbotao[8].setLocation(605, 10);
-                    break;
-                case 9:
-                    this.vetbotao[9].setLocation(675, 10);
-                    break;
-                case 10:
-                    this.vetbotao[10].setLocation(745, 10);
-                    break;
-                case 11:
-                    this.vetbotao[11].setLocation(815, 10);
-                    break;
-                case 12:
-                    this.vetbotao[12].setLocation(885, 10);
-                    break;
-                case 13:
-                    this.vetbotao[13].setLocation(45, 70);
-                    break;
-                case 14:
-                    this.vetbotao[14].setLocation(115, 70);
-                    break;
-                case 15:
-                    this.vetbotao[15].setLocation(185, 70);
-                    break;
-                case 16:
-                    this.vetbotao[16].setLocation(255, 70);
-                    break;
-                case 17:
-                    this.vetbotao[17].setLocation(325, 70);
-                    break;
-                case 18:
-                    this.vetbotao[18].setLocation(395, 70);
-                    break;
-                case 19:
-                    this.vetbotao[19].setLocation(465, 70);
-                    break;
-                case 20:
-                    this.vetbotao[20].setLocation(535, 70);
-                    break;
-                case 21:
-                    this.vetbotao[21].setLocation(605, 70);
-                    break;
-                case 22:
-                    this.vetbotao[22].setLocation(675, 70);
-                    break;
-                case 23:
-                    this.vetbotao[23].setLocation(745, 70);
-                    break;
-                case 24:
-                    this.vetbotao[24].setLocation(815, 70);
-                    break;
-                case 25:
-                    this.vetbotao[25].setLocation(885, 70);
-                    break;
-            }
             this.painelLetras.add(this.vetbotao[i]);
         }
     }
@@ -434,4 +361,38 @@ public class Interface extends JFrame implements ActionListener, ItemListener {
             }
         }
     }
+
+    // Método para processar a tecla pressionada
+    private void processarLetra(char letra) {
+        boolean letraJaUsada = false;
+        for (int i = 0; i < 26; i++) {
+            if (this.vetbotao[i].getText().equals(String.valueOf(letra))) {
+                letraJaUsada = true;
+                break;
+            }
+        }
+        if (!letraJaUsada) {
+            for (int i = 0; i < 26; i++) {
+                if (String.valueOf((char) ('A' + i)).equalsIgnoreCase(String.valueOf(letra))) {
+                    this.vetbotao[i].doClick();  // Simula o clique do botão correspondente
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        char tecla = e.getKeyChar();  // Captura a tecla pressionada
+        if (Character.isLetter(tecla)) {
+            tecla = Character.toUpperCase(tecla);  // Converte para maiúscula
+            processarLetra(tecla);
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+    
+    @Override
+    public void keyReleased(KeyEvent e) {}
 }
